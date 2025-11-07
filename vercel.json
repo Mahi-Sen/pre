@@ -1,0 +1,11 @@
+json
+{
+  "version": 2,
+  "builds": [{ "src": "api/bot.py", "use": "@vercel/python" }],
+  "routes": [
+    { "src": "/bot.*", "dest": "/api/bot.py" },
+    { "src": "/cron", "dest": "/api/bot.py" },
+    { "src": "/setwebhook", "dest": "/api/bot.py" }
+  ],
+  "crons": [{ "path": "/cron", "schedule": "0 */6 * * *" }]
+}
