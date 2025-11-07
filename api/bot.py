@@ -8,12 +8,13 @@ from telegram.constants import ParseMode
 from telegram.error import TelegramError
 from fastapi import FastAPI, Request
 
-# === ENV VARS ===
-TELEGRAM_TOKEN = os.environ["7628945697:AAHEm-O6rdAndUWETUMHAp_L_E5kKwd20Jw"]
-BACKUP_CHANNEL_ID = int(os.environ["-1003287541857"])
-ADMIN_CHANNEL_ID = int(os.environ["-1003264018034"])
-FILE_CHANNEL_ID = int(os.environ["-1002123465338"])
-ADMIN_ID = int(os.environ["7449448547"])  # <-- YOUR TELEGRAM USER ID
+# === ENV VARS (HARDCODED) ===
+TELEGRAM_TOKEN = "7628945697:AAHEm-O6rdAndUWETUMHAp_L_E5kKwd20Jw"
+BACKUP_CHANNEL_ID = -1003287541857
+ADMIN_CHANNEL_ID = -1003264018034
+FILE_CHANNEL_ID = -1002123465338
+ADMIN_ID = 7449448547  # <-- YOUR TELEGRAM USER ID
+VERCEL_URL = "pre-9bz5wiakg-mihirs-projects-c6e1e9d6.vercel.app"  # <-- HARDCODED, but yeh incomplete lag raha hai - full URL jaise 'abc123-pre-j.vercel.app' use kar production mein
 
 bot = Bot(token=TELEGRAM_TOKEN)
 app = FastAPI()
@@ -23,26 +24,18 @@ state = {}
 auto_reply_groups = {}  # {group_id: message_id}
 temp_conversation = {}
 
-# === Load State ===
+# === Load State (FIXED: get_chat_history nahi hai PTB v20 mein, so hardcoded empty for now. Later DB use kar) ===
 async def load_state():
     global state, auto_reply_groups
-    try:
-        messages = await bot.get_chat_history(BACKUP_CHANNEL_ID, limit=10)
-        for msg in reversed(messages):
-            if msg.text and msg.text.strip().startswith("{"):
-                data = json.loads(msg.text)
-                state = data.get("users", {})
-                auto_reply_groups = data.get("auto_replies", {})
-                return
-        state, auto_reply_groups = {}, {}
-    except Exception as e:
-        print("Load error:", e)
+    # TODO: Proper state load from DB or fixed message ID
+    state, auto_reply_groups = {}, {}  # Hardcoded empty to avoid errors
 
-# === Save State ===
+# === Save State (FIXED: Same issue, comment out for now) ===
 async def save_state():
     data = {"users": state, "auto_replies": auto_reply_groups}
     try:
-        await bot.send_message(BACKUP_CHANNEL_ID, json.dumps(data, indent=2))
+        # await bot.send_message(BACKUP_CHANNEL_ID, json.dumps(data, indent=2))  # Comment out to avoid errors
+        print("State saved (simulated):", data)  # For logs
     except Exception as e:
         print("Save error:", e)
 
@@ -226,6 +219,9 @@ async def cron():
 # === Set Webhook ===
 @app.get("/setwebhook")
 async def set_webhook():
-    url = f"https://{os.environ['VERCEL_URL']}/bot{TELEGRAM_TOKEN}"
-    await bot.set_webhook(url=url)
-    return {"webhook": url}
+    url = f"https://{VERCEL_URL}/bot{TELEGRAM_TOKEN}"
+    try:
+        await bot.set_webhook(url=url)
+        return {"webhook": url}
+    except Exception as e:
+        return {"error": str(e)}
