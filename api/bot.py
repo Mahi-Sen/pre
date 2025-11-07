@@ -94,6 +94,19 @@ async def handle_update(update: Update, context):
     user = msg.from_user
     chat = msg.chat
 
+    # === Start Command Handler ===
+    if msg.text and msg.text.startswith('/start'):
+        await msg.reply_text(
+            "🚀 <b>Welcome to the Bot!</b> 🚀\n\n"
+            "I can help you with:\n"
+            "- Setting timed bans ⏳\n"
+            "- Auto-replies in groups 🔄\n"
+            "- File caption cleaning 📝\n\n"
+            "<i>Use commands or reply to messages to interact!</i>",
+            parse_mode=ParseMode.HTML
+        )
+        return
+
     # === Admin Only Check ===
     if user.id != ADMIN_ID and chat.type == "private":
         return  # Ignore non-admin in private
@@ -186,7 +199,7 @@ async def handle_update(update: Update, context):
 
             await msg.reply_text(
                 f"<b>Timer Set!</b>\n"
-                f"{mention_user(user_id, 'User')} <code>{text}</code> channel se "
+                f"{mention_user(user_id, "User")} <code>{text}</code> channel se "
                 f"<b>{temp_conversation[chat_id]['expiry_ms']//60000} min</b> baad nikaal diya jayega.",
                 parse_mode=ParseMode.HTML
             )
