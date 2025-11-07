@@ -1,4 +1,3 @@
-json
 {
   "version": 2,
   "builds": [{ "src": "api/bot.py", "use": "@vercel/python" }],
