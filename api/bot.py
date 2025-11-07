@@ -9,11 +9,11 @@ from telegram.error import TelegramError
 from fastapi import FastAPI, Request
 
 # === ENV VARS ===
-TELEGRAM_TOKEN = os.environ["TELEGRAM_TOKEN"]
-BACKUP_CHANNEL_ID = int(os.environ["BACKUP_CHANNEL_ID"])
-ADMIN_CHANNEL_ID = int(os.environ["ADMIN_CHANNEL_ID"])
-FILE_CHANNEL_ID = int(os.environ["FILE_CHANNEL_ID"])
-ADMIN_ID = int(os.environ["ADMIN_ID"])  # <-- YOUR TELEGRAM USER ID
+TELEGRAM_TOKEN = os.environ["7628945697:AAHEm-O6rdAndUWETUMHAp_L_E5kKwd20Jw"]
+BACKUP_CHANNEL_ID = int(os.environ["-1003287541857"])
+ADMIN_CHANNEL_ID = int(os.environ["-1003264018034"])
+FILE_CHANNEL_ID = int(os.environ["-1002123465338"])
+ADMIN_ID = int(os.environ["7449448547"])  # <-- YOUR TELEGRAM USER ID
 
 bot = Bot(token=TELEGRAM_TOKEN)
 app = FastAPI()
