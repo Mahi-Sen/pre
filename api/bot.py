@@ -14,7 +14,7 @@ BACKUP_CHANNEL_ID = -1003287541857
 ADMIN_CHANNEL_ID = -1003264018034
 FILE_CHANNEL_ID = -1002123465338
 ADMIN_ID = 7449448547  # <-- YOUR TELEGRAM USER ID
-VERCEL_URL = "pre-9bz5wiakg-mihirs-projects-c6e1e9d6.vercel.app"  # <-- HARDCODED, but yeh incomplete lag raha hai - full URL jaise 'abc123-pre-j.vercel.app' use kar production mein
+VERCEL_URL = "pre-i8f3.onrender.com"  # <-- HARDCODED, but yeh incomplete lag raha hai - full URL jaise 'abc123-pre-j.vercel.app' use kar production mein
 
 bot = Bot(token=TELEGRAM_TOKEN)
 app = FastAPI()
