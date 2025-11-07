@@ -6,5 +6,5 @@
     { "src": "/cron", "dest": "/api/bot.py" },
     { "src": "/setwebhook", "dest": "/api/bot.py" }
   ],
-  "crons": [{ "path": "/cron", "schedule": "0 */24 * * *" }]
+  "crons": [{ "path": "/cron", "schedule": "0 0 * * *" }]
 }
