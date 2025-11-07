@@ -1,0 +1,5 @@
+txt
+python-telegram-bot==20.8
+fastapi
+uvicorn
+httpx
